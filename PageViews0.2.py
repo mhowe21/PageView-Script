@@ -14,11 +14,12 @@ class run():
         sd = u.startDate()
         ed = u.endDate()
 
-        p = multiprocessing.Pool(processes=3)
-        try:
-            p.starmap(c.pages,zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
-        except KeyError:            
-            p.close()
+        p = multiprocessing.Pool()
+        print("running...")
+        p.starmap(c.pages, zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
+        p.join()
+        p.close()
+        print("done!")
 
 
 class calls():
@@ -43,7 +44,7 @@ class calls():
             f = open("user " + userID + " pagesFile.csv", "a")
 
             for i in range(len(JSONResponse)):
-                f.write(str(JSONResponse[i]["created_at"]) + "," + str(JSONResponse[i]["updated_at"]) + "," + str(JSONResponse[i]["url"]) + "," + str(JSONResponse[i]["participated"])+ "," + str(JSONResponse[i]["http_method"]) + "," + str(
+                f.write(str(JSONResponse[i]["created_at"]) + "," + str(JSONResponse[i]["updated_at"]) + "," + str(JSONResponse[i]["url"]) + "," + str(JSONResponse[i]["participated"]) + "," + str(JSONResponse[i]["http_method"]) + "," + str(
                     JSONResponse[i]["user_agent"])+"," + str(JSONResponse[i]["remote_ip"]) + '\n')
 
             # canvas paginates to results of 100 so we need to get the next relitivle link if there are more then 100 results
@@ -52,12 +53,11 @@ class calls():
                 url = rLinks
             except KeyError:
                 url = None
-            rateLimit = response.headers['X-Rate-Limit-Remaining']
-            if(rateLimit < 300)
-            print("Warning you are about to exceed your rate limit!")
-            
+            #rateLimit = response.headers['X-Rate-Limit-Remaining']
 
             f.close()
+
+        return(f)
 
 
 class userInput():
@@ -76,17 +76,18 @@ class userInput():
         return userList
 
     def startDate(self):
-        startDate = input("enter the page view start date (yyyy-mm-dd): ")
+        startDate = input("enter the page view start date, leave blank for all. (yyyy-mm-dd): ")
         return startDate
 
     def endDate(self):
-        endDate = input("enter the page view end date (yyyy-mm-dd): ")
+        endDate = input("enter the page view end date, leave blank for all. (yyyy-mm-dd): ")
         return endDate
 
 
 def main():
     r = run()
     r.run()
+
 
 if __name__ == "__main__":
     main()
