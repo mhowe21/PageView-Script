@@ -54,7 +54,8 @@ class calls():
             except KeyError:
                 url = None
             rateLimit = response.headers['X-Rate-Limit-Remaining']
-            print("rate limit remaining " + rateLimit)
+            if(rateLimit < 300)
+            print("Warning you are about to exceed your rate limit!")
             
 
             f.close()
