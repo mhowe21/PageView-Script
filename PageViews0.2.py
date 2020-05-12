@@ -15,9 +15,11 @@ class run():
         ed = u.endDate()
 
         p = multiprocessing.Pool(processes=3)
-        p.starmap(c.pages,zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
-        p.join()
-        p.close()
+        try:
+            p.starmap(c.pages,zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
+        except:
+            p.join()
+            p.close()
 
 
 class calls():
@@ -51,7 +53,8 @@ class calls():
                 url = rLinks
             except KeyError:
                 url = None
-            #rateLimit = response.headers['X-Rate-Limit-Remaining']
+            rateLimit = response.headers['X-Rate-Limit-Remaining']
+            print("rate limit remaining " + rateLimit)
             
 
             f.close()
