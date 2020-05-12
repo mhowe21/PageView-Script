@@ -18,7 +18,7 @@ class run():
         try:
             p.starmap(c.pages,zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
         except:
-            p.join()
+            
             p.close()
 
 
