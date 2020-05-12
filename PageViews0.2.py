@@ -1,5 +1,7 @@
 import requests
 import json
+import multiprocessing
+import itertools
 
 
 class run():
@@ -12,12 +14,14 @@ class run():
         sd = u.startDate()
         ed = u.endDate()
 
-        for user in uID:
-            c.pages(env, tok, user, sd, ed)
+        p = multiprocessing.Pool(processes=3)
+        p.starmap(c.pages,zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
+        p.join()
+        p.close()
 
 
 class calls():
-    def pages(self, instance, token, userID, startDate, endDate):
+    def pages(self, userID, instance, token, startDate, endDate):
 
         url = "https://" + instance + ".instructure.com/api/v1/users/" + userID + "/page_views"
 
