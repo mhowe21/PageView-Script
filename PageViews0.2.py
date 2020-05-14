@@ -1,9 +1,14 @@
-import requests
+# imports and install
 import json
 import multiprocessing
 import itertools
-
-
+import subprocess
+import sys
+try:
+    import requests
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", requests])
+    
 class run():
     def run(self):
         u = userInput()
@@ -85,7 +90,6 @@ class userInput():
     def endDate(self):
         endDate = input("enter the page view end date, leave blank for all. (yyyy-mm-dd): ")
         return endDate
-
 
 def main():
     r = run()
