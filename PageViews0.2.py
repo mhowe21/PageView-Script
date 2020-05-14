@@ -8,7 +8,8 @@ try:
     import requests
 except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", requests])
-    
+
+
 class run():
     def run(self):
         u = userInput()
@@ -22,13 +23,15 @@ class run():
         p = multiprocessing.Pool()
         print("running...")
         try:
-            p.starmap(c.pages, zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
+            p.starmap(c.pages, zip(uID, itertools.repeat(env), itertools.repeat(
+                tok), itertools.repeat(sd), itertools.repeat(ed)))
             p.join()
             p.close()
             print("done!")
         except multiprocessing.pool.MaybeEncodingError:
             p.close()
             print("done!")
+
 
 class calls():
     def pages(self, userID, instance, token, startDate, endDate):
@@ -84,12 +87,15 @@ class userInput():
         return userList
 
     def startDate(self):
-        startDate = input("enter the page view start date, leave blank for all. (yyyy-mm-dd): ")
+        startDate = input(
+            "enter the page view start date, leave blank for all. (yyyy-mm-dd): ")
         return startDate
 
     def endDate(self):
-        endDate = input("enter the page view end date, leave blank for all. (yyyy-mm-dd): ")
+        endDate = input(
+            "enter the page view end date, leave blank for all. (yyyy-mm-dd): ")
         return endDate
+
 
 def main():
     r = run()
