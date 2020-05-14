@@ -16,11 +16,14 @@ class run():
 
         p = multiprocessing.Pool()
         print("running...")
-        p.starmap(c.pages, zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
-        p.join()
-        p.close()
-        print("done!")
-
+        try:
+            p.starmap(c.pages, zip(uID, itertools.repeat(env), itertools.repeat(tok), itertools.repeat(sd), itertools.repeat(ed)))
+            p.join()
+            p.close()
+            print("done!")
+        except multiprocessing.pool.MaybeEncodingError:
+            p.close()
+            print("done!")
 
 class calls():
     def pages(self, userID, instance, token, startDate, endDate):
