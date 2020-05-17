@@ -37,6 +37,9 @@ class calls():
     def pages(self, userID, instance, token, startDate, endDate):
 
         url = "https://" + instance + ".instructure.com/api/v1/users/" + userID + "/page_views"
+        f = open("user " + userID + " pagesFile.csv", "a")
+        # format csv headers
+        f.write("created at" + "," + "updated at" + "," + "url" + "," + "participated" + "," + "http method" + "," + "user agent" + "," + "remote ip" + '\n')
 
         payload = {'per_page': '100',
                    'start_time': startDate,
@@ -53,10 +56,11 @@ class calls():
             JSONResponse = response.json()
             # print(JSONResponse)
             f = open("user " + userID + " pagesFile.csv", "a")
+            
 
             for i in range(len(JSONResponse)):
                 f.write(str(JSONResponse[i]["created_at"]) + "," + str(JSONResponse[i]["updated_at"]) + "," + str(JSONResponse[i]["url"]) + "," + str(JSONResponse[i]["participated"]) + "," + str(JSONResponse[i]["http_method"]) + "," + str(
-                    JSONResponse[i]["user_agent"])+"," + str(JSONResponse[i]["remote_ip"]) + '\n')
+                    JSONResponse[i]["user_agent"]).replace(","," ") + "," + str(JSONResponse[i]["remote_ip"]) + '\n')
 
             # canvas paginates to results of 100 so we need to get the next relitivle link if there are more then 100 results
             try:
@@ -89,11 +93,13 @@ class userInput():
     def startDate(self):
         startDate = input(
             "enter the page view start date, leave blank for all. (yyyy-mm-dd): ")
+        startDate = startDate.replace(" ", "")
         return startDate
 
     def endDate(self):
         endDate = input(
             "enter the page view end date, leave blank for all. (yyyy-mm-dd): ")
+        endDate = endDate.replace(" ", "")
         return endDate
 
 
