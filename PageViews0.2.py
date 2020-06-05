@@ -36,6 +36,9 @@ class run():
 class calls():
     def pages(self, userID, instance, token, startDate, endDate):
 
+        f = open("user " + userID + " pagesFile.csv", "a")
+        f.write("created_at"+ "," + "updated_at" + "," + "url" + "," + "participated" + "," + "http_method" + "," + "user_agent" + "," + "remote_ip"+ '\n')
+
         url = "https://" + instance + ".instructure.com/api/v1/users/" + userID + "/page_views"
 
         payload = {'per_page': '100',
@@ -52,11 +55,11 @@ class calls():
 
             JSONResponse = response.json()
             # print(JSONResponse)
-            f = open("user " + userID + " pagesFile.csv", "a")
+            
 
             for i in range(len(JSONResponse)):
                 f.write(str(JSONResponse[i]["created_at"]) + "," + str(JSONResponse[i]["updated_at"]) + "," + str(JSONResponse[i]["url"]) + "," + str(JSONResponse[i]["participated"]) + "," + str(JSONResponse[i]["http_method"]) + "," + str(
-                    JSONResponse[i]["user_agent"])+"," + str(JSONResponse[i]["remote_ip"]) + '\n')
+                    JSONResponse[i]["user_agent"]).replace(",", "") +"," + str(JSONResponse[i]["remote_ip"]) + '\n')
 
             # canvas paginates to results of 100 so we need to get the next relitivle link if there are more then 100 results
             try:
@@ -66,9 +69,9 @@ class calls():
                 url = None
             #rateLimit = response.headers['X-Rate-Limit-Remaining']
 
-            f.close()
+        f.close()
 
-        return(f)
+        return f
 
 
 class userInput():
