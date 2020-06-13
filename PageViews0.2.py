@@ -58,19 +58,16 @@ class calls():
 
             JSONResponse = response.json()
             # print(JSONResponse)
-<<<<<<< HEAD
-=======
+
             f = open("user " + userID + " pagesFile.csv", "a")
->>>>>>> 83e1d233029fce0c453baf68e058b135aaca331c
+
             
 
             for i in range(len(JSONResponse)):
                 f.write(str(JSONResponse[i]["created_at"]) + "," + str(JSONResponse[i]["updated_at"]) + "," + str(JSONResponse[i]["url"]) + "," + str(JSONResponse[i]["participated"]) + "," + str(JSONResponse[i]["http_method"]) + "," + str(
-<<<<<<< HEAD
+
                     JSONResponse[i]["user_agent"]).replace(",", "") +"," + str(JSONResponse[i]["remote_ip"]) + '\n')
-=======
-                    JSONResponse[i]["user_agent"]).replace(","," ") + "," + str(JSONResponse[i]["remote_ip"]) + '\n')
->>>>>>> 83e1d233029fce0c453baf68e058b135aaca331c
+
 
             # canvas paginates to results of 100 so we need to get the next relitivle link if there are more then 100 results
             try:
