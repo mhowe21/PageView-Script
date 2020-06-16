@@ -37,7 +37,7 @@ class calls():
     def pages(self, userID, instance, token, startDate, endDate):
 
         f = open("user " + userID + " pagesFile.csv", "a")
-        f.write("created_at"+ "," + "updated_at" + "," + "url" + "," + "participated" + "," + "http_method" + "," + "user_agent" + "," + "remote_ip"+ '\n')
+        
 
         url = "https://" + instance + ".instructure.com/api/v1/users/" + userID + "/page_views"
         f = open("user " + userID + " pagesFile.csv", "a")
