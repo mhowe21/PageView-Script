@@ -27,13 +27,13 @@ def run():
     # calls(tok,env,sd,ed).pageViewsCSV()
     c = calls(tok, env, sd, ed)
 
-    # multiprocess users
+    # multiprocess users 
     print("Running...")
     try:
         pool.map(c.pageViewsCSV, uID)
         pool.join()
         pool.close()
-    # catch possible  errors at the end of a sequence and close the multithreaded tabs.
+    # catch possible  errors at the end of a sequence and close the multithreaded tabs.     
     except:
         pool.close()
         print("Done")
